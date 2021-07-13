@@ -78,20 +78,6 @@ class ApiController extends Controller
         return $this->respondWithToken($token);
     }
 
-    protected function respondWithToken($token)
-    {
-        return response()->json(
-            [
-                'success' => true,
-                'token' => $token,
-                'token_type' => 'bearer',
-            ]
-        );
-    } //end respondWithToken()
-
-
-
-
     public function logout(Request $request)
     {
         //valid credential
@@ -141,4 +127,15 @@ class ApiController extends Controller
         // $token = JWTAuth::authenticate($request->token);
         return $this->respondWithToken($token);
     }
+
+    protected function respondWithToken($token)
+    {
+        return response()->json(
+            [
+                'success' => true,
+                'token' => $token,
+                'token_type' => 'bearer',
+            ]
+        );
+    } //end respondWithToken()
 }
