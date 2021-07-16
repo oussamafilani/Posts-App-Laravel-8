@@ -14,11 +14,12 @@ class ApiController extends Controller
     public function register(Request $request)
     {
         //Validate data
-        $data = $request->only('name', 'email', 'password');
+        $data = $request->only('name', 'email', 'password', 'role');
         $validator = Validator::make($data, [
             'name' => 'required|string',
             'email' => 'required|email|unique:users',
-            'password' => 'required|string|min:6|max:50'
+            'password' => 'required|string|min:6|max:50',
+            'role' => 'required'
         ]);
 
         //Send failed response if request is not valid
@@ -30,7 +31,8 @@ class ApiController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt($request->password)
+            'password' => bcrypt($request->password),
+            'role' => $request->role
         ]);
 
         //User created, return success response
@@ -108,25 +110,26 @@ class ApiController extends Controller
 
     public function get_user(Request $request)
     {
-        // $this->validate($request, [
-        //     'token' => 'required'
-        // ]);
+        $this->validate($request, [
+            'token' => 'required'
+        ]);
 
-        // $user = JWTAuth::authenticate($request->token);
+        $user = JWTAuth::authenticate($request->token);
 
-        // return response()->json(['user' => $user]);
-        return response()->json(auth()->user());
+        // return response()->json(['user' => $user->email]);
+        return response()->json(['email' => $user->email]);
+        // return response()->json(auth()->user());
     }
 
-    public function refresh()
-    {
-        // $this->validate($request, [
-        //     'token' => 'required'
-        // ]);
+    // public function refresh()
+    // {
+    //     // $this->validate($request, [
+    //     //     'token' => 'required'
+    //     // ]);
 
-        // $token = JWTAuth::authenticate($request->token);
-        return $this->respondWithToken($token);
-    }
+    //     // $token = JWTAuth::authenticate($request->token);
+    //     return $this->respondWithToken($token);
+    // }
 
     protected function respondWithToken($token)
     {
