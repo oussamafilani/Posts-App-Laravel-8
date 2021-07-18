@@ -27,20 +27,33 @@
                     {{$p->created_at->diffForHumans()}}
                 </span>
                 <p class="mb-2">{{$p->body}}</p>
-                
-                <div class="flex items-center">
-                @if(!$p->likedBy(auth()->user()))
-                    <form action="{{route('posts.like',$p)}}" method="post" class="mr-1">
-                        @csrf
-                        <button type="submit" class="text-blue-500">Like</button>
-                    </form>
-                @else
-                    <form action="{{route('posts.like',$p)}}" method="post" class="mr-1">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="text-blue-500">Unlike</button>
-                    </form>
+                @if($p->ownedBy(auth()->user()))
+                    <div>
+                        <form action="{{route('posts.destroy',$p)}}" method="post" class="mr-1">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit"><i class="fas fa-trash text-red-500 text-xl cursor-pointer"></i></button>
+                        </form>
+                    </div>
                 @endif
+                <div class="flex items-center">
+                @auth
+
+                    @if(!$p->likedBy(auth()->user()))
+                        <form action="{{route('posts.like',$p)}}" method="post" class="mr-1">
+                            @csrf
+                            <button type="submit"><i class="far fa-thumbs-up text-current text-2xl cursor-pointer"></i></button>
+                        </form>
+                    @else
+                        <form action="{{route('posts.like',$p)}}" method="post" class="mr-1">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit"><i class="fas fa-thumbs-up text-blue-500 text-2xl cursor-pointer"></i></button>
+                        </form>
+                    @endif
+
+                   
+                @endauth
                 <span>{{$p->likes->count()}} {{Str::plural('like',$p->likes->count())}}</span>
                 </div>
             </div> 
