@@ -13,7 +13,7 @@ class PostController extends Controller
         return view(
             'posts.index',
             [
-                'post' => $posts
+                'posts' => $posts
             ]
         );
     }
@@ -31,9 +31,8 @@ class PostController extends Controller
 
     public function destroy(Post $post)
     {
-        if (!$post->ownedBy(auth()->user())) {
-            dd('no');
-        }
+
+        $this->authorize('delete', $post);
         $post->delete();
         return back();
     }
