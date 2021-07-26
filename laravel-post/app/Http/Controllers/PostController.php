@@ -36,4 +36,12 @@ class PostController extends Controller
         $post->delete();
         return back();
     }
+
+    public function update(Post $post)
+    {
+
+        $this->authorize('update', $post);
+        dd($post['body']);
+        return back();
+    }
 }

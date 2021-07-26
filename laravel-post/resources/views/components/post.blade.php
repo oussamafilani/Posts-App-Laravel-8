@@ -1,19 +1,28 @@
 @props(['post' => $post])
 
 <div>
-    <div class="mb-4">
+    <div class="mb-4 bg-gray-50 p-4 rounded-lg">
         <a href="{{route('users.posts',$post->user)}}" class="font-bold">{{$post->user->name}}</a> <span class="text-gray-600 text-sm">
             {{$post->created_at->diffForHumans()}}
         </span>
         <p class="mb-2">{{$post->body}}</p>
-
+ 
         @can('delete',$post)
-            <form action="{{route('posts.destroy',$post)}}" method="post" class="mr-1">
+            <form action="{{route('posts.destroy',$post)}}" method="post" class="mr-1 float-right">
                 @csrf
                 @method('DELETE')
-                <button type="submit"><i class="fas fa-trash text-red-500 text-xl cursor-pointer"></i></button>
+                <button type="submit"><i class="fas fa-trash text-red-500 text-xl  cursor-pointer"></i></button>
             </form>
-        @endcan    
+        @endcan 
+
+        @can('update',$post)
+        <form action="{{route('posts.update',$post)}}" method="post" class="mr-1 float-right mr-4">
+            @csrf
+            @method('PUT')
+            <button type="submit"><i class="fas fa-edit text-gray-700 text-xl  cursor-pointer"></i></button>
+        </form>
+        @endcan   
+
         <div class="flex items-center">
         @auth
 
