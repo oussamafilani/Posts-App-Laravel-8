@@ -46,7 +46,6 @@
     </div> 
 
     @can('update',$post)
-    {{-- @if($post->id ==  Request::get('id') ) --}}
     @if($post->id ==  request()->get('id') )
     <form action="{{route('posts.update',$post)}}" method="POST" class="mb-4">
         @method('PATCH')
