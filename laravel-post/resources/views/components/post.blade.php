@@ -9,7 +9,7 @@
         <a href="{{route('users.posts',$post->user)}}" class="font-bold">{{$post->user->name}}</a> <span class="text-gray-600 text-sm">
             {{$post->created_at->diffForHumans()}}
         </span>
-        <p class="mb-2">{{$post->body}}</p>
+        <p class="mb-2 p-5">{{$post->body}}</p>
         
        
         @can('delete',$post)
