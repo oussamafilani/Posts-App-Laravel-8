@@ -1,7 +1,11 @@
 @props(['post' => $post])
 
 <div>
-    <div class="mb-4 bg-gray-50 p-4 rounded-lg">
+    @if($post->id !=  request()->get('id')  )
+
+    <div class="mb-4 bg-gray-50 p-5 rounded-lg relative ">
+        {{-- <div class="absolute right-0 top-0"><i class="fas fa-ellipsis-h cursor-pointer mr-3"></i></div> --}}
+
         <a href="{{route('users.posts',$post->user)}}" class="font-bold">{{$post->user->name}}</a> <span class="text-gray-600 text-sm">
             {{$post->created_at->diffForHumans()}}
         </span>
@@ -43,8 +47,10 @@
         @endauth
         <span>{{$post->likes->count()}} {{Str::plural('like',$post->likes->count())}}</span>
         </div>
-    </div> 
 
+    </div> @endif
+
+    
     @can('update',$post)
     @if($post->id ==  request()->get('id') )
     <form action="{{route('posts.update',$post)}}" method="POST" class="mb-4">
@@ -53,19 +59,20 @@
         <div class="mb-4">
             <label for="body" class="sr-only">Body</label>
             <textarea name="body" id="body" cols="30" rows="4" class="bg-gray-100 border-2 w-full p-4 rounded-lg @error('body') border-red-500 @enderror" placeholder="Post something!">{{$post->body}}</textarea>
-    
+            
             @error('body')
-                <div class="text-red-500 mt-2 text-sm">
-                    {{ $message }}
-                </div>
+            <div class="text-red-500 mt-2 text-sm">
+                {{ $message }}
+            </div>
             @enderror
         </div>
-    
+        
         <div>
             <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded font-medium">Update</button>
+            <button class="bg-red-500 text-white px-4 py-2 rounded font-medium"><a href="{{route('posts')}}" class="p-3">Cancel</a></button>
         </div>
     </form>
     @endif
     @endcan
+      
 </div>
-
