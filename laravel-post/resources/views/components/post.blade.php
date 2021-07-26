@@ -16,9 +16,9 @@
         @endcan 
 
         @can('update',$post)
-        <form action="{{route('posts.update',$post)}}" method="post" class="mr-1 float-right mr-4">
+        <form action="{{route('posts.edit',$post)}}" method="post" class="mr-1 float-right mr-4">
             @csrf
-            @method('PUT')
+            @method('GET')
             <button type="submit"><i class="fas fa-edit text-gray-700 text-xl  cursor-pointer"></i></button>
         </form>
         @endcan   
@@ -44,4 +44,29 @@
         <span>{{$post->likes->count()}} {{Str::plural('like',$post->likes->count())}}</span>
         </div>
     </div> 
+
+    @can('update',$post)
+    {{-- @if($post->id ==  Request::get('id') ) --}}
+    @if($post->id ==  request()->get('id') )
+    <form action="{{route('posts.update',$post)}}" method="POST" class="mb-4">
+        @method('PATCH')
+        @csrf
+        <div class="mb-4">
+            <label for="body" class="sr-only">Body</label>
+            <textarea name="body" id="body" cols="30" rows="4" class="bg-gray-100 border-2 w-full p-4 rounded-lg @error('body') border-red-500 @enderror" placeholder="Post something!">{{$post->body}}</textarea>
+    
+            @error('body')
+                <div class="text-red-500 mt-2 text-sm">
+                    {{ $message }}
+                </div>
+            @enderror
+        </div>
+    
+        <div>
+            <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded font-medium">Update</button>
+        </div>
+    </form>
+    @endif
+    @endcan
 </div>
+
