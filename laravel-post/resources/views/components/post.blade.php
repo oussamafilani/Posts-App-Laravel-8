@@ -10,14 +10,15 @@
             {{$post->created_at->diffForHumans()}}
         </span>
         <p class="mb-2">{{$post->body}}</p>
- 
+        
+       
         @can('delete',$post)
             <form action="{{route('posts.destroy',$post)}}" method="post" class="mr-1 float-right">
                 @csrf
                 @method('DELETE')
                 <button type="submit"><i class="fas fa-trash text-red-500 text-xl  cursor-pointer"></i></button>
             </form>
-        @endcan 
+        @endcan
 
         @can('update',$post)
         <form action="{{route('posts.edit',$post)}}" method="post" class="mr-1 float-right mr-4">
@@ -27,25 +28,32 @@
         </form>
         @endcan   
 
-        <div class="flex items-center">
-        @auth
+        <div class="flex item-center">
+            @auth
 
-            @if(!$post->likedBy(auth()->user()))
-                <form action="{{route('posts.like',$post)}}" method="post" class="mr-1">
-                    @csrf
-                    <button type="submit"><i class="far fa-thumbs-up text-current text-2xl cursor-pointer"></i></button>
-                </form>
-            @else
-                <form action="{{route('posts.like',$post)}}" method="post" class="mr-1">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit"><i class="fas fa-thumbs-up text-blue-500 text-2xl cursor-pointer"></i></button>
-                </form>
-            @endif
+                @if(!$post->likedBy(auth()->user()))
+                    <form action="{{route('posts.like',$post)}}" method="post" class="mr-1">
+                        @csrf
+                        <button type="submit"><i class="far fa-thumbs-up text-current text-2xl cursor-pointer"></i></button>
+                    </form>
+                @else
+                    <form action="{{route('posts.like',$post)}}" method="post" class="mr-1">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit"><i class="fas fa-thumbs-up text-blue-500 text-2xl cursor-pointer"></i></button>
+                    </form>
+                @endif
 
-           
-        @endauth
-        <span>{{$post->likes->count()}} {{Str::plural('like',$post->likes->count())}}</span>
+            
+            @endauth
+            <span>{{$post->likes->count()}} {{Str::plural('like',$post->likes->count())}}</span>
+        @can('update',$post)
+        <form action="{{route('posts.comment',$post)}}" method="post" class="mr-2 ml-10">
+            @csrf
+            <button type="submit"><i class="far fa-comment text-gray-700 text-xl cursor-pointer"></i>   Comment</button>
+
+        </form>
+        @endcan 
         </div>
 
     </div> @endif
