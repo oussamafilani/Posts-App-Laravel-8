@@ -9,7 +9,6 @@
             <p>Posted {{$posts->count()}} {{Str::plural('post',$posts->count())}} and 
             received {{$user->receivedLikes->count()}} likes</p>
         </div>
-
         <div class="bg-white p-6 rounded-lg">
             @if ($posts->count())
 
