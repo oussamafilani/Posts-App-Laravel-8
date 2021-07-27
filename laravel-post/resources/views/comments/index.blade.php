@@ -1,6 +1,10 @@
-@props(['post' => $post])
+@extends('layouts.app')
 
-<div>
+@section('content')
+<div class="flex justify-center">
+
+<div class="w-8/12">
+
     @if($post->id !=  request()->get('id')  )
 
     <div class="mb-4 bg-gray-50 p-5 rounded-lg relative ">
@@ -105,3 +109,6 @@
     @endcan
       
 </div>
+</div>
+
+@endsection

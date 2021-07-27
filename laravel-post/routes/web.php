@@ -2,12 +2,13 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostLikeController;
+use App\Http\Controllers\UserPostController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\UserPostController;
 
 Route::get('/', function () {
     return view('home');
@@ -33,8 +34,13 @@ Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.
 Route::patch('/posts/{post}', [PostController::class, 'update'])->name('posts.update');
 Route::get('/posts?id={post:id}', [PostController::class, function () {
 }])->name('posts.edit');
-Route::post('/posts/{post}', [PostController::class, function () {
-}])->name('posts.comment');
+
+// Route::post('/posts/{post}', [PostController::class, function () {
+// }])->name('posts.comment');
 
 Route::post('/posts/{post}/likes', [PostLikeController::class, 'store'])->name('posts.like');
 Route::delete('/posts/{post}/likes', [PostLikeController::class, 'destroy'])->name('posts.like');
+
+
+Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->name('posts.comment');
+Route::get('/posts/{post:id}/comments', [CommentController::class, 'index'])->name('posts.comment');
