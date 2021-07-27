@@ -107,6 +107,17 @@
     </form>
     @endif
     @endcan
+
+
+    @foreach ($post->comments as $com)
+    <div class="mb-4 bg-gray-50 p-5 rounded-lg  ">
+
+        <span class="text-gray-600 text-sm">
+           {{$post->created_at->diffForHumans()}}
+       </span>
+       <p class="mb-2 p-5">{{$com->comment}}</p>
+   </div>
+    @endforeach
       
 </div>
 </div>

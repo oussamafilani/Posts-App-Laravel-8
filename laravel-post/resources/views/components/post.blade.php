@@ -50,7 +50,7 @@
         <form action="{{route('posts.comment',$post)}}" method="post" class="mr-2 ml-10">
             @csrf
             @method('GET')
-            <button type="submit"><i class="far fa-comment text-gray-700 text-xl cursor-pointer"></i>   Comment</button>
+            <button type="submit"><i class="far fa-comment text-gray-700 text-xl cursor-pointer"></i>   {{$post->comments->count()}}</button>
 
         </form>
    
