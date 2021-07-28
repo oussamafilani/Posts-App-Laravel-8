@@ -13,7 +13,7 @@
             <p class="mb-2 p-5">{{ $post->body }}</p>
 
             {{-- start delete post --}}
-            @if (auth()->user()->role == 1)
+            @if ($post->user()->role === 1)
 
                 <form action="{{ route('posts.destroy', $post) }}" method="post" class="mr-1 float-right">
                     @csrf
