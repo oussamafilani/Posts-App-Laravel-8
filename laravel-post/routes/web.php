@@ -28,15 +28,14 @@ Route::post('/login', [LoginController::class, 'store']);
 Route::get('/register', [RegisterController::class, 'index'])->name('register');
 Route::post('/register', [RegisterController::class, 'store']);
 
-Route::get('/posts', [PostController::class, 'index'])->name('posts');
+Route::get('/', [PostController::class, 'index'])->name('posts');
+// Route::get('/posts', [PostController::class, 'index'])->name('posts');
 Route::post('/posts', [PostController::class, 'store']);
 Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
 Route::patch('/posts/{post}', [PostController::class, 'update'])->name('posts.update');
 Route::get('/posts?id={post:id}', [PostController::class, function () {
 }])->name('posts.edit');
 
-// Route::post('/posts/{post}', [PostController::class, function () {
-// }])->name('posts.comment');
 
 Route::post('/posts/{post}/likes', [PostLikeController::class, 'store'])->name('posts.like');
 Route::delete('/posts/{post}/likes', [PostLikeController::class, 'destroy'])->name('posts.like');

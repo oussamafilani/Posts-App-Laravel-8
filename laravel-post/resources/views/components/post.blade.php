@@ -13,32 +13,36 @@
             <p class="mb-2 p-5">{{ $post->body }}</p>
 
             {{-- start delete post --}}
-            @if ($post->user()->role === 1)
+            @auth
+                @if (auth()->user()->role === 1)
 
-                <form action="{{ route('posts.destroy', $post) }}" method="post" class="mr-1 float-right">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit"><i class="fas fa-trash text-red-500 text-xl  cursor-pointer"></i></button>
-                </form>
-            @else
-                @can('delete', $post)
                     <form action="{{ route('posts.destroy', $post) }}" method="post" class="mr-1 float-right">
                         @csrf
                         @method('DELETE')
                         <button type="submit"><i class="fas fa-trash text-red-500 text-xl  cursor-pointer"></i></button>
                     </form>
-                @endcan
-            @endif
+                @else
+                    @can('delete', $post)
+                        <form action="{{ route('posts.destroy', $post) }}" method="post" class="mr-1 float-right">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit"><i class="fas fa-trash text-red-500 text-xl  cursor-pointer"></i></button>
+                        </form>
+                    @endcan
+                @endif
+            @endauth
             {{-- end delete post --}}
 
 
-            @can('update', $post)
-                <form action="{{ route('posts.edit', $post) }}" method="post" class="mr-1 float-right mr-4">
-                    @csrf
-                    @method('GET')
-                    <button type="submit"><i class="fas fa-edit text-gray-700 text-xl  cursor-pointer"></i></button>
-                </form>
-            @endcan
+            @auth
+                @can('update', $post)
+                    <form action="{{ route('posts.edit', $post) }}" method="post" class="mr-1 float-right mr-4">
+                        @csrf
+                        @method('GET')
+                        <button type="submit"><i class="fas fa-edit text-gray-700 text-xl  cursor-pointer"></i></button>
+                    </form>
+                @endcan
+            @endauth
 
             <div class="flex item-center">
                 @auth
@@ -68,29 +72,30 @@
                         {{ $post->comments->count() }}</button>
 
                 </form>
-
             </div>
 
             {{-- start Comment section --}}
-            <form action="{{ route('posts.comment', $post) }}" method="POST" class="my-4 ">
-                @csrf
-                <div class="mb-4">
-                    <label for="comment" class="sr-only">Comment</label>
-                    <textarea name="comment" id="comment" cols="30" rows="1"
-                        class="bg-gray-100 border-2 w-full p-4 rounded-lg @error('comment') border-red-500 @enderror"
-                        placeholder="write a comment ..."></textarea>
+            @auth
+                <form action="{{ route('posts.comment', $post) }}" method="POST" class="my-4 ">
+                    @csrf
+                    <div class="mb-4">
+                        <label for="comment" class="sr-only">Comment</label>
+                        <textarea name="comment" id="comment" cols="30" rows="1"
+                            class="bg-gray-100 border-2 w-full p-4 rounded-lg @error('comment') border-red-500 @enderror"
+                            placeholder="write a comment ..."></textarea>
 
-                    @error('comment')
-                        <div class="text-red-500 mt-2 text-sm">
-                            {{ $message }}
-                        </div>
-                    @enderror
-                </div>
+                        @error('comment')
+                            <div class="text-red-500 mt-2 text-sm">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
 
-                <div>
-                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded font-medium">Reply</button>
-                </div>
-            </form>
+                    <div>
+                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded font-medium">Reply</button>
+                    </div>
+                </form>
+            @endauth
 
             {{-- end comment section --}}
 
