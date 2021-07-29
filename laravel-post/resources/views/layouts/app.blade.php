@@ -13,53 +13,49 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 
-<body class="bg-gray-200">
-    <nav class="p-6 bg-white flex justify-between mb-6">
+{{-- <body class="bg-gray-200"> --}}
 
-        <ul class="flex items-center">
+<body style="background-color: #F3F2EF">
+    <div class="header-2">
 
-            <li>
-                <a href="/" class="p-3">Home</a>
-            </li>
-            <li>
-                <a href="{{ route('dashboard') }}" class="p-3">Dashboard</a>
-            </li>
-            <li>
-                <a href="{{ route('posts') }}" class="p-3">Post</a>
-            </li>
+        <nav class="bg-white py-2 mb-6 md:py-4">
+            <div class="container px-4 mx-auto md:flex md:items-center">
 
-        </ul>
-        <ul class="flex items-center">
+                <div class="flex justify-between items-center">
+                    <a href="/" class="font-bold text-xl text-indigo-600">FORUM</a>
+                    <button
+                        class="border border-solid border-gray-600 px-3 py-1 rounded text-gray-600 opacity-50 hover:opacity-75 md:hidden"
+                        id="navbar-toggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
 
-            @auth
+                <div class="hidden md:flex flex-col md:flex-row md:ml-auto mt-3 md:mt-0" id="navbar-collapse">
 
-                <li>
-                    <a href="" class="p-3">{{ auth()->User()->username }}</a>
-                </li>
+                    @auth
+                        <a href="#"
+                            class="p-2 lg:px-4 md:mx-2 text-gray-600 rounded hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300">{{ auth()->User()->username }}</a>
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button type="submit"
+                                class="p-2 lg:px-4 md:mx-2 text-indigo-600 text-center border border-transparent rounded hover:bg-indigo-100 hover:text-indigo-700 transition-colors duration-300">Logout</button>
+                        </form>
 
-                <li>
-                    <form action="{{ route('logout') }}" method="POST" class="p-3 inline">
-                        @csrf
-                        <button class="p-3" type="submit">Logout</button>
-                    </form>
-                </li>
+                    @endauth
+                    @guest
+                        <a href="{{ route('login') }}"
+                            class="p-2 lg:px-4 md:mx-2 text-indigo-600 text-center border border-transparent rounded hover:bg-indigo-100 hover:text-indigo-700 transition-colors duration-300">Login</a>
+                        <a href="{{ route('register') }}"
+                            class="p-2 lg:px-4 md:mx-2 text-indigo-600 text-center border border-solid border-indigo-600 rounded hover:bg-indigo-600 hover:text-white transition-colors duration-300 mt-1 md:mt-0 md:ml-1">Signup</a>
+                    @endguest
+                </div>
+            </div>
+        </nav>
 
-            @endauth
-
-            @guest
-                <li>
-                    <a href="{{ route('login') }}" class="p-3">Login</a>
-                </li>
-                <li>
-                    <a href="{{ route('register') }}" class="p-3">Register</a>
-                </li>
-            @endguest
-
-
-        </ul>
-
-    </nav>
+    </div>
     @yield('content')
+
+    <script src="{{ asset('js/main.js') }}"></script>
 </body>
 
 </html>
