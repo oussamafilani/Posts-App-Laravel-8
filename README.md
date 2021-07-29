@@ -2,11 +2,11 @@
 
 ![PHP FRAMEWORKS BENCHMARKING](https://raw.githubusercontent.com/oussamafilani/Posts-App-Laravel-8/main/Conception%20UML/php-frameworks-benchmark.jpg)
 
-## artisan
+## Artisan
 
 Artisan is the command line interface included with Laravel. Artisan exists at the root of your application as the artisan script and provides a number of helpful commands that can assist you while you build your application.
 
-## composer
+## Composer
 
 Composer is an application-level package manager for the PHP programming language that provides a standard format for managing dependencies of PHP software and required libraries. It was developed by Nils Adermann and Jordi Boggiano, who continue to manage the project. They began development in April 2011 and first released it on March 1, 2012. Composer is strongly inspired by Node.js's "npm" and Ruby's "bundler".The project's dependency solving algorithm started out as a PHP-based port of openSUSE's libzypp satsolver.
 
