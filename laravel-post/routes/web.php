@@ -28,9 +28,9 @@ Route::post('/login', [LoginController::class, 'store']);
 Route::get('/register', [RegisterController::class, 'index'])->name('register');
 Route::post('/register', [RegisterController::class, 'store']);
 
-Route::get('/', [PostController::class, 'index'])->name('posts');
+Route::get('/posts', [PostController::class, 'index'])->name('posts');
 // Route::get('/posts', [PostController::class, 'index'])->name('posts');
-Route::post('/posts', [PostController::class, 'store']);
+Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
 Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
 Route::patch('/posts/{post}', [PostController::class, 'update'])->name('posts.update');
 Route::get('/posts?id={post:id}', [PostController::class, function () {

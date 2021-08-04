@@ -35,10 +35,10 @@
 
 
             @auth
-                @can('update', $post)
-                    <form action="{{ route('posts.edit', $post) }}" method="post" class="mr-1 float-right mr-4">
-                        @csrf
+                @can('delete', $post)
+                    <form action="{{ route('posts.edit', $post) }}" method="POST" class="mr-1 float-right mr-4">
                         @method('GET')
+                        @csrf
                         <button type="submit"><i class="fas fa-edit text-gray-700 text-xl  cursor-pointer"></i></button>
                     </form>
                 @endcan
